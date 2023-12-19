@@ -1,0 +1,30 @@
+<h1 style="margin-bottom: 30px; color: whitesmoke;">Создать пост</h1>
+    
+
+    <div class="container">
+        <div class="col-md-9" style="border-right: 0px solid grey; padding-right:15px;">
+            <%= form_for :auto, html: {multipart: true}, url: autos_path do |f|%>
+                <%if @auto.errors.any?%>
+                        <%@auto.errors.messages.each do |msg|%>
+                            <div class="alert alert-danger">
+                                <%= msg [1][0]%>
+                            </div>
+                        <%end%>
+                <%end%>  
+                <div class="mb-2">
+                    <div class="mb-2 text-white">Марка\модель\пробег</div>
+                     <%= text_field_tag :title, "", class: 'form-control' %>
+                </div>
+                <div class="mb-4 text-white">
+                    <div class="mb-2 text-white">Коментарий</div>
+                    <%= text_area_tag :auto, "", class: 'form-control' %>
+                </div>
+                    <%# <button type="button" class="btn btn-outline-success">Добавить изображения</button> %>
+                 <%= file_field_tag :image %>
+                <%= submit_tag "Опубликовать", class: "btn btn-outline-danger" %>
+            <%end%>
+        </div>
+        <div class="col-md-3 text-white"></div>
+    </div>
+
+    

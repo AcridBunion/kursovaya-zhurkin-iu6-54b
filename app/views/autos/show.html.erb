@@ -1,0 +1,60 @@
+ <div class="container">
+    <div class="row">
+        <div class="col-md-9 text-white" >
+            <h1> <%= @auto.title%> </h1>
+            <small> 
+                <%= link_to "#{User.find(@auto.user_id).email}", profile_path(User.find(@auto.user_id)), class: "text-white"%> , 
+                        <time><%= @auto.created_at.to_date.strftime("%d %B, %Y") %> </time>
+                        <br>
+                        <% if (current_user)%>
+                            <% if (current_user.id == @auto.user_id)%>
+                                <div class="btn-group" role="group" aria-label="Basic example" style="margin-bottom: 40px">
+                                    <%= link_to "Редактировать", edit_auto_path(@auto), class: "btn btn-outline-success"%>
+                                    <%= button_to "Удалить публикацию", auto_path(@auto), method: :delete, class: "btn btn-outline-danger"%>
+                                </div>
+                                <br>
+                            <%end%>
+                        <%end%>
+            </small> 
+            <p> <%= image_tag @auto.image.url, class: 'img-show w-100' if @auto.image? %> </p>
+            <div style="overflow: clip;">
+                <p> <%= @auto.car_text%> </p>
+            </div>
+            
+
+            <h4>Комментарии:</h4>
+                <hr>
+                <h5>Добавить ответ</h5>
+                    <%if(current_user)%>
+                        <%= form_for([@auto, @auto.comments.build]) do |f|%>
+                            <div class="mb-4"> 
+                                <%= text_area_tag :body, "", class: 'form-control' %>
+                            </div>
+                            <%= submit_tag "Добавить", class: "btn btn-success" %> 
+                        <%end%>
+                    <%else%>
+                        <a>Чтобы добавить ответ нужно</a> <%= link_to "авторизиваться", new_user_session_path%>
+                    <%end%>
+                </hr>
+                <hr>
+                    <h4>Все ответы </h4>
+                    
+                        <% @auto.comments.each do |comment| %>
+                            <div class="alert alert-light">
+                                <p> <strong> 
+                                    <%if(comment.user_id)%>
+                                        <%if(User.find(comment.user_id).nickname)%> 
+                                            <%= User.find(comment.user_id).nickname%>, <time><%= comment.created_at.to_date.strftime("%d %B, %Y") %> </time>:
+                                        <%else%>
+                                            <%= User.find(comment.user_id).email%>, <time><%= comment.created_at.to_date.strftime("%d %B, %Y") %> </time>:
+                                        <%end%> 
+                                    <%end%> 
+                                </strong>
+                                    <%= comment.body%>
+                                </p>
+                            </div>
+                        <% end%>
+                </hr>
+        </div>
+    </div>
+</div>

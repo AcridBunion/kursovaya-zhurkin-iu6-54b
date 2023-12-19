@@ -1,0 +1,31 @@
+<h1 class="text-white">Изменение поста</h1>
+    
+
+    <div class="container text-white">
+        <div class="col-md-9" >
+            <%= form_for :auto, url: auto_path(@auto), html: {multipart: true}, method: :patch do |f|%>
+                <%if(@auto.errors.any?)%>
+                    <%@auto.errors.messages.each do |msg|%>
+                        <div class="alert alert-danger">
+                            <%= msg[1][0]%>
+                        </div>
+                    <%end%>
+                <%end%>                
+                <div class="mb-2">
+                    <div class="mb-2 text-white">марка\модель\пробег:</div>
+                    <%= text_field_tag :title, "#{@auto.title}", class: 'form-control' %> 
+                    <%# <%= f.text_field(:title, {:class => 'form-control'}) %> 
+                </div>
+                <p> <%= image_tag @auto.image.url(:large), class: 'img-show' if @auto.image? %> </p>
+                <%= file_field_tag :image %>
+                <div class="mb-4">
+                    <div class="mb-2">Коментарий:</div>
+                    <%= text_area_tag :car_text, "#{@auto.car_text}", class: 'form-control' %> 
+                </div>
+                
+                <%= submit_tag "Изменить", class: "btn btn-outline-danger" %>
+            <%end%>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+

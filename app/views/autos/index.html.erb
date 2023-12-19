@@ -1,0 +1,34 @@
+<div class="container">
+    <h2 style="color: red;">Все темы:</h2> 
+</div>
+<div class = "container" style="border-right: 3px solid red; padding-right:15px;">
+    <div class="row">
+    <% @autos.each do |auto| %>
+            <div class = "col-md-4 text-left my-4 border border-dark bg-light">
+                <%= link_to "#{auto.title}", auto_path(auto), class: "a"%>
+                <br>
+                <small> Автор: 
+                <%if(User.find(auto.user_id).nickname)%>
+                    <%=link_to "#{User.find(auto.user_id).nickname}", profile_path(User.find(auto.user_id)), class: "a" %>
+                <%else%>
+                    <%=link_to "#{User.find(auto.user_id).email}", profile_path(User.find(auto.user_id)), class: "a" %>
+                <%end%>
+                </small>
+            </div>
+            <div class = "col-md-8 text-left my-4 border border-dark bg-light">
+                <%=link_to auto_path(auto) do%>
+                    <div >
+                    <%= link_to "#{auto.car_text}", auto_path(auto), class: "a"%>
+                    </div>
+                <%end%>
+            </div>
+            <div class = "col-md-0 text-left my-4 border border-dark bg-light">
+                <%=link_to auto_path(auto) do%>
+                    <div >
+                    <%= image_tag auto.image.url(:thumb), class: 'img-show w-100' if auto.image? %>
+                    </div>
+                <%end%>
+            </div>
+    <% end%>
+    </div>
+</div>

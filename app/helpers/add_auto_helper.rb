@@ -1,0 +1,2 @@
+module AddAutoHelper
+end

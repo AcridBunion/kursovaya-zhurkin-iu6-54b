@@ -1,0 +1,19 @@
+<h2 class="text-white"> Редактирование профиля</h2>
+<%= form_for :profile, url: profile_path(@profile), method: :patch do |f|%>
+        <%if(@profile.errors.any?)%>
+            <%@profile.errors.full_messages.each do |msg|%>
+                <div class="alert alert-danger">
+                    <%= msg%>
+                </div>
+            <%end%>
+        <%end%>
+        <div class="mb-2 text-white">
+            <div class="mb-2">Имя пользователя:</div>
+             <%= text_field_tag :nickname, "#{@profile.nickname}", class: 'form-control' %> 
+        </div>
+        <div class="mb-4 text-white">
+            <div class="mb-2 text-white">Машины во влаедении:</div>
+             <%= text_area_tag :about_me, "#{@profile.about_me}", class: 'form-control' %> 
+        </div>
+        <%= submit_tag "Сохранить", class: "btn btn-danger" %>
+    <%end%>

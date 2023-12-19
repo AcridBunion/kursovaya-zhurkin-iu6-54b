@@ -1,0 +1,27 @@
+<div class="container" style=" color: red;">
+    <h2>Найденные темы:</h2> 
+</div>
+<div class = "container" style=" color: whitesmoke;">
+    <div class="row" style=" color: whitesmoke;">
+    <%if (@autos).count > 0%>
+        <% @autos.each do |auto| %>
+            <div class = "col-md-12 text-left my-4" style=" color: whitesmoke;">
+                    <%= link_to "#{auto.title}", auto_path(auto), class: "custom" %>
+                    <br style="color: whitesmoke;">
+                    <small style=" color: whitesmoke;"> Автор: 
+                    <%if(User.find(auto.user_id).nickname)%>
+                        <%=link_to "#{User.find(auto.user_id).nickname}", profile_path(User.find(auto.user_id)), class: "custom" %>
+                    <%else%>
+                        <%=link_to "#{User.find(auto.user_id).email}", profile_path(User.find(auto.user_id)), class: "custom" %>
+                    <%end%>
+                    </small>
+                </div>
+            
+        <% end%>
+    <%else%>
+        <h3 style="color: grey" class="text-center">По вашему запросу ничего не найдено<br><br>
+        <%=button_to "Вернуться на главную", root_path, class: "btn btn-outline-success", method: :get%></h3>
+        
+    <%end%>
+    </div>
+</div>

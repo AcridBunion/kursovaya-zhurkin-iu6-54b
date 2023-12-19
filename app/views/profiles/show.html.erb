@@ -1,0 +1,43 @@
+<div style="margin-bottom: 50px">
+<h4>
+    <%if(@profile.nickname)%>
+        <h4 class="text-white"><%= @profile.nickname %></h4>
+    <%else%>
+        <h4 class="text-white"><%= @profile.email %></h4>
+    <%end%>
+
+    <%if(@profile.about_me)%>
+        <h5 class="text-white">Описание:</h5>
+        <p class="text-white"><%= @profile.about_me %><p>
+    <%end%>
+</h4>
+
+
+<% if (current_user)%>
+    <% if (current_user.id == @profile.id)%>
+        <%= link_to "Редактировать профиль", edit_profile_path(@profile), class: "btn btn-outline-danger"%>
+    <%end%>
+<%end%>
+</div>
+<hr>
+
+<div class="container"><h4 class="text-white">Темы:</h4> </div>
+<div class="row text-white">
+    <% @profile.autos.each do |auto| %>
+        
+        <div class = "col-md-4 text-left my-4 text-white">
+                    <%=link_to auto_path(auto) do%>
+                        <%= image_tag auto.image.url(:thumb), class: 'img-show w-100' if auto.image? %>
+                    <%end%>
+                    <%= link_to "#{auto.title}", auto_path(auto), class: "text-white"%>
+                    <br>
+                    <small class="text-white"> Автор: 
+                    <%if(User.find(auto.user_id).nickname)%>
+                        <%=link_to "#{User.find(auto.user_id).nickname}", profile_path(User.find(auto.user_id)), class: "text-white" %>
+                    <%else%>
+                        <%=link_to "#{User.find(auto.user_id).email}", profile_path(User.find(auto.user_id)), class: "text-white" %>
+                    <%end%>
+                    </small>
+        </div>
+    <% end%>
+</div>
